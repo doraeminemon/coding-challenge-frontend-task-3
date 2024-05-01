@@ -82,9 +82,22 @@ const ConnectWalletButton = ({
   return (
     <>
       <ConnectButton.Custom>
-        {({ account, chain, openConnectModal, mounted }) => {
-          const ready = mounted;
-          const connected = !!(ready && account && chain);
+        {({
+          account,
+          chain,
+          openAccountModal,
+          openChainModal,
+          openConnectModal,
+          mounted,
+          authenticationStatus
+        }) => {
+          const ready = mounted && authenticationStatus !== 'loading';
+          const connected =
+            ready &&
+            account &&
+            chain &&
+            (!authenticationStatus ||
+              authenticationStatus === 'authenticated');
           return (
             <>
               <Button
